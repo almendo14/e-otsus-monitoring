@@ -1,180 +1,305 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { checkThreeWayMatch, checkAutomaticBlocking, SipdBudget, PddiktiCampus, BankDisbursement } from '@/app/dashboard';
+import { 
+  Building2, 
+  Users, 
+  Map, 
+  AlertTriangle,
+  Wallet,
+  CheckCircle2,
+  ThumbsUp,
+  ThumbsDown,
+  TrendingUp,
+  GraduationCap
+} from 'lucide-react';
 
 export default function CommandCenterView() {
-  // Logic states
-  const [budget] = useState<SipdBudget>({ regency: 'Papua Pilot', totalOtsusFund: 1000000000, educationAllocation: 280000000 });
-  const [hasRedScore] = useState<boolean>(true);
-  const [alumniScouting, setAlumniScouting] = useState<any[]>([]);
-  const [ewsStudents] = useState([
-    { id: 1, name: 'Petrus', major: 'Education', gpa: 3.25, status: 'Active' },
-    { id: 2, name: 'Lukas', major: 'Law', gpa: 2.90, status: 'Warning' },
-  ]);
-
-  useEffect(() => {
-    // Populate alumni
-    setAlumniScouting([
-      { name: 'Dr. Sarah Yoweni', major: 'Medical', gpa: 3.85 },
-      { name: 'Lukas E., S.T.', major: 'Engineering', gpa: 3.60 }
-    ]);
-  }, []);
-
-  const blockStatus = checkAutomaticBlocking(budget, hasRedScore);
-  const currentEducationPct = Math.round((budget.educationAllocation / budget.totalOtsusFund) * 100);
-
-  // Hardcoding the exact prompts for visual demonstration
-  const runThreeWayMatchDemo = () => {
-    // We visually display the orange alert box per the prompt requirement immediately.
-  };
-
   return (
-    <div className="flex flex-col gap-4 lg:gap-6 animate-in fade-in duration-500 zoom-in-95">
+    <div className="flex flex-col gap-6 animate-in fade-in duration-500 zoom-in-95 font-sans">
       
-      {/* 2. MIDDLE SECTION: Core Logic Alerts (Moved to TOP on mobile) */}
-      <div className="order-1 lg:order-2 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-        {/* Garda Pengaman 30% */}
-        <div className="bg-white rounded-2xl p-4 lg:p-6 shadow-sm border border-slate-100 flex flex-col min-h-[160px]">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h3 className="text-base lg:text-lg font-bold text-slate-800">Garda Pengaman 30%</h3>
-              <p className="text-[10px] lg:text-xs text-slate-500">Automatic Fund Blocking System</p>
-            </div>
-            <div className="p-2 bg-red-50 text-red-500 rounded-lg shrink-0">
-              <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-            </div>
-          </div>
-          
-          <div className="mt-auto bg-red-50 border border-red-200 rounded-xl p-3 lg:p-4 text-center">
-            <h4 className="font-bold text-red-600 uppercase text-xs lg:text-sm mb-1 tracking-wide">Disbursement Blocked</h4>
-            <p className="text-[10px] lg:text-xs text-red-500">Allocation below 30% mandate. Corrective action required.</p>
-          </div>
-        </div>
-
-        {/* Three-Way Matching */}
-        <div className="bg-white rounded-2xl p-4 lg:p-6 shadow-sm border border-slate-100 flex flex-col min-h-[160px]">
-          <div className="flex justify-between items-start mb-4">
-            <div>
-              <h3 className="text-base lg:text-lg font-bold text-slate-800">Three-Way Matching</h3>
-              <p className="text-[10px] lg:text-xs text-slate-500">Cross-checking SIPD, PDDIKTI & Bank</p>
-            </div>
-            <div className="p-2 bg-orange-50 text-orange-500 rounded-lg shrink-0">
-              <svg className="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-            </div>
-          </div>
-          
-          <div className="mt-auto bg-orange-50 border border-orange-200 rounded-xl p-3 lg:p-4 text-center">
-            <h4 className="font-bold text-orange-600 uppercase text-xs lg:text-sm mb-1 tracking-wide">FRAUD ALERT</h4>
-            <p className="text-[10px] lg:text-xs text-orange-500">Unpaid tuition detected at UNCEN while budget shows absorbed.</p>
-          </div>
-        </div>
-      </div>
-
-      {/* 1. TOP ROW: Metrics (Moved below alerts on mobile) */}
-      <div className="order-2 lg:order-1 grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6">
-        <div className="bg-white rounded-2xl p-4 lg:p-6 shadow-sm border border-slate-100 flex flex-col justify-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-full translate-x-12 -translate-y-8 opacity-50"></div>
-          <p className="text-[10px] lg:text-sm text-slate-500 font-medium mb-1">Total Otsus Education Budget</p>
-          <h3 className="text-2xl lg:text-3xl font-bold text-[#1E293B] truncate">Rp 1M+</h3>
-          <p className="text-[10px] lg:text-xs text-green-500 mt-1 lg:mt-2 font-medium">↑ Verified SIPD</p>
-        </div>
-
-        <div className="bg-[#3B5998] rounded-2xl p-4 lg:p-6 shadow-md border border-[#3B5998] flex flex-col justify-center text-white relative overflow-hidden">
-          <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full translate-x-16 translate-y-12"></div>
-          <p className="text-[10px] lg:text-sm text-blue-100 font-medium mb-1">Current Allocation</p>
-          <h3 className="text-3xl lg:text-4xl font-bold">{currentEducationPct}%</h3>
-          <p className="text-[10px] lg:text-xs text-blue-200 mt-1 lg:mt-2 font-medium">Target: ≥ 30%</p>
-        </div>
-
-        <div className="bg-white rounded-2xl p-4 lg:p-6 shadow-sm border border-slate-100 flex flex-col justify-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-orange-50 rounded-full translate-x-12 -translate-y-8 opacity-50"></div>
-          <p className="text-[10px] lg:text-sm text-slate-500 font-medium mb-1">Students Tracked</p>
-          <h3 className="text-2xl lg:text-3xl font-bold text-[#1E293B]">5,420</h3>
-          <p className="text-[10px] lg:text-xs text-slate-400 mt-1 lg:mt-2 font-medium">Across 12 Universities</p>
-        </div>
-      </div>
-
-      {/* 3. BOTTOM SECTION: Tables */}
-      <div className="order-3 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+      {/* 1. Header: 4 Summary Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-6">
         
-        {/* SDM Papua Performance (EWS) */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
-          <div className="px-4 lg:px-6 py-4 border-b border-slate-100 shrink-0">
-            <h3 className="text-xs lg:text-sm font-bold text-slate-800 uppercase tracking-widest">SDM Papua (EWS)</h3>
+        {/* Total Otsus Budget */}
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Otsus Budget FY26</p>
+            <h3 className="text-2xl font-bold text-slate-800">Rp 4.2 T</h3>
+            <div className="flex items-center gap-1 mt-1 text-xs font-medium text-emerald-600">
+              <TrendingUp className="w-3.5 h-3.5" />
+              <span>100% Disbursed</span>
+            </div>
           </div>
-          <div className="overflow-x-auto w-full">
-            <table className="w-full text-left text-xs lg:text-sm min-w-[300px]">
-              <thead>
-                <tr className="bg-slate-50 text-slate-500 text-[10px] lg:text-xs">
-                  <th className="px-4 lg:px-6 py-3 font-medium">Student Name</th>
-                  <th className="px-4 lg:px-6 py-3 font-medium">GPA</th>
-                  <th className="px-4 lg:px-6 py-3 font-medium">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {ewsStudents.map(s => (
-                  <tr key={s.id} className="hover:bg-slate-50 transition">
-                    <td className="px-4 lg:px-6 py-3 font-medium text-slate-700 whitespace-nowrap">{s.name}</td>
-                    <td className="px-4 lg:px-6 py-3 text-slate-600 font-semibold">{s.gpa.toFixed(2)}</td>
-                    <td className="px-4 lg:px-6 py-3">
-                      <span className={`px-2 py-1 rounded text-[8px] lg:text-[10px] uppercase font-bold tracking-wide whitespace-nowrap ${s.status === 'Warning' ? 'bg-orange-100 text-orange-600' : 'bg-green-100 text-green-600'}`}>
-                        {s.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="p-3 bg-blue-50 rounded-xl">
+            <Wallet className="w-6 h-6 text-blue-600" />
           </div>
         </div>
 
-        {/* Alumni Talent Pool */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
-          <div className="px-4 lg:px-6 py-4 border-b border-slate-100 shrink-0">
-            <h3 className="text-xs lg:text-sm font-bold text-[#3B5998] uppercase tracking-widest flex items-center gap-2">
-              <span>🎓</span> Alumni Talent Pool
-            </h3>
+        {/* Total Students */}
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Total SDM Papua</p>
+            <h3 className="text-2xl font-bold text-slate-800">12,450</h3>
+            <div className="flex items-center gap-1 mt-1 text-xs font-medium text-slate-500">
+              <GraduationCap className="w-3.5 h-3.5" />
+              <span>Across 45 Campuses</span>
+            </div>
           </div>
-          <div className="p-4 space-y-3">
-            {alumniScouting.map((alumni, idx) => (
-              <div key={idx} className="flex sm:flex-row flex-col sm:items-center justify-between gap-3 p-3 border border-slate-100 rounded-xl hover:shadow-md transition bg-slate-50/50">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 shrink-0 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
-                    {alumni.name.charAt(0)}
-                  </div>
-                  <div>
-                    <h4 className="text-[11px] lg:text-sm font-bold text-slate-800">{alumni.name}</h4>
-                    <p className="text-[9px] lg:text-xs text-slate-500">{alumni.major} • GPA: {alumni.gpa.toFixed(2)}</p>
-                  </div>
-                </div>
-                <button className="w-full sm:w-auto bg-[#3B5998] hover:bg-blue-700 text-white text-[10px] uppercase font-bold px-4 py-3 sm:py-2 rounded-lg transition shadow-sm">
-                  Scout Profile
-                </button>
-              </div>
-            ))}
+          <div className="p-3 bg-indigo-50 rounded-xl">
+            <Users className="w-6 h-6 text-indigo-600" />
+          </div>
+        </div>
+
+        {/* Verified Regions */}
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">SIPD Verification</p>
+            <h3 className="text-2xl font-bold text-slate-800">85%</h3>
+            <div className="flex items-center gap-1 mt-1 text-xs font-medium text-emerald-600">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>Data Synced</span>
+            </div>
+          </div>
+          <div className="p-3 bg-emerald-50 rounded-xl">
+            <Building2 className="w-6 h-6 text-emerald-600" />
+          </div>
+        </div>
+
+        {/* Public Complaints */}
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex items-center justify-between">
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Active Complaints</p>
+            <h3 className="text-2xl font-bold text-slate-800">42</h3>
+            <div className="flex items-center gap-1 mt-1 text-xs font-medium text-amber-600">
+              <AlertTriangle className="w-3.5 h-3.5" />
+              <span>Action Required</span>
+            </div>
+          </div>
+          <div className="p-3 bg-amber-50 rounded-xl">
+            <ThumbsDown className="w-6 h-6 text-amber-600" />
           </div>
         </div>
 
       </div>
 
-      {/* 4. BOTTOM METRICS ROW */}
-      <div className="order-4 bg-white rounded-2xl p-4 lg:p-6 shadow-sm border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h3 className="text-xs lg:text-sm font-bold text-slate-800 uppercase tracking-widest">Pilot Impact Metrics</h3>
-          <p className="text-[10px] lg:text-xs text-slate-500 mt-1">Overall measurement of governance accuracy</p>
-        </div>
-        <div className="w-full sm:w-auto sm:text-right">
-          <p className="text-[10px] lg:text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">Fund Tracking Accuracy</p>
-          <div className="flex items-center gap-3">
-            <div className="flex-1 sm:w-48 h-2 bg-slate-100 rounded-full overflow-hidden">
-              <div className="h-full bg-[#3B5998]" style={{ width: '96%' }}></div>
+      {/* 2. Middle Row: Charts & Maps */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        {/* Fund Allocation Chart (Bar Chart via Tailwind) */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 lg:col-span-2 flex flex-col h-80">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-base font-bold text-slate-800 tracking-tight">Budget vs Realization by Sector</h3>
+            <span className="text-xs font-semibold bg-slate-100 text-slate-600 px-2 py-1 rounded">FY 2026 Overview</span>
+          </div>
+          
+          <div className="flex-1 flex items-end justify-around gap-2 px-4 pb-2 mt-auto">
+            {/* Education Bar */}
+            <div className="flex flex-col items-center gap-2 group w-full max-w-[80px]">
+              <div className="w-full flex items-end justify-center relative h-48 bg-slate-50 rounded-t-lg overflow-hidden group-hover:bg-slate-100 transition-colors">
+                {/* Target */}
+                <div className="absolute bottom-0 w-full bg-blue-100 h-[90%] rounded-t-lg"></div>
+                {/* Realization */}
+                <div className="absolute bottom-0 w-full bg-blue-600 h-[65%] rounded-t-lg shadow-sm"></div>
+                {/* Tooltip */}
+                <div className="absolute top-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-xs py-1 px-2 rounded z-10 whitespace-nowrap">
+                  Realized: 65%
+                </div>
+              </div>
+              <span className="text-xs font-semibold text-slate-600 text-center">Education</span>
             </div>
-            <span className="text-sm lg:text-lg font-bold text-[#3B5998] shrink-0">96%</span>
+
+            {/* Health Bar */}
+            <div className="flex flex-col items-center gap-2 group w-full max-w-[80px]">
+              <div className="w-full flex items-end justify-center relative h-48 bg-slate-50 rounded-t-lg overflow-hidden group-hover:bg-slate-100 transition-colors">
+                <div className="absolute bottom-0 w-full bg-emerald-100 h-[80%] rounded-t-lg"></div>
+                <div className="absolute bottom-0 w-full bg-emerald-500 h-[45%] rounded-t-lg shadow-sm"></div>
+                <div className="absolute top-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-xs py-1 px-2 rounded z-10 whitespace-nowrap">
+                  Realized: 45%
+                </div>
+              </div>
+              <span className="text-xs font-semibold text-slate-600 text-center">Health</span>
+            </div>
+
+            {/* Infrastructure Bar */}
+            <div className="flex flex-col items-center gap-2 group w-full max-w-[80px]">
+              <div className="w-full flex items-end justify-center relative h-48 bg-slate-50 rounded-t-lg overflow-hidden group-hover:bg-slate-100 transition-colors">
+                <div className="absolute bottom-0 w-full bg-amber-100 h-[100%] rounded-t-lg"></div>
+                <div className="absolute bottom-0 w-full bg-amber-500 h-[85%] rounded-t-lg shadow-sm"></div>
+                <div className="absolute top-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-xs py-1 px-2 rounded z-10 whitespace-nowrap">
+                  Realized: 85%
+                </div>
+              </div>
+              <span className="text-xs font-semibold text-slate-600 text-center">Infra</span>
+            </div>
+
+             {/* Economy Bar */}
+             <div className="flex flex-col items-center gap-2 group w-full max-w-[80px]">
+              <div className="w-full flex items-end justify-center relative h-48 bg-slate-50 rounded-t-lg overflow-hidden group-hover:bg-slate-100 transition-colors">
+                <div className="absolute bottom-0 w-full bg-indigo-100 h-[60%] rounded-t-lg"></div>
+                <div className="absolute bottom-0 w-full bg-indigo-500 h-[20%] rounded-t-lg shadow-sm"></div>
+                <div className="absolute top-2 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-800 text-white text-xs py-1 px-2 rounded z-10 whitespace-nowrap">
+                  Realized: 20%
+                </div>
+              </div>
+              <span className="text-xs font-semibold text-slate-600 text-center">Economy</span>
+            </div>
+          </div>
+
+          {/* Chart Legend */}
+          <div className="flex justify-center gap-6 mt-4 pt-4 border-t border-slate-100">
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded bg-blue-100"></span>
+              <span className="text-xs text-slate-500 font-medium">Budget Target</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded bg-blue-600"></span>
+              <span className="text-xs text-slate-500 font-medium">Actual Realization</span>
+            </div>
           </div>
         </div>
+
+        {/* GIS Mapping Preview (Top 3 Regencies) */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col h-80 relative overflow-hidden">
+          {/* Subtle bg map pattern */}
+          <div className="absolute right-0 top-0 opacity-10 pointer-events-none translate-x-4 -translate-y-4">
+            <Map className="w-48 h-48 text-slate-500" />
+          </div>
+
+          <div className="relative z-10 mb-4">
+            <h3 className="text-base font-bold text-slate-800 tracking-tight flex items-center gap-2">
+              <Map className="w-4 h-4 text-blue-600" />
+              GIS Top Absorption
+            </h3>
+            <p className="text-xs text-slate-500 mt-1">Leading regencies in fund utilization</p>
+          </div>
+
+          <div className="flex-1 flex flex-col justify-center space-y-4 relative z-10">
+            {/* Item 1 */}
+            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 font-bold text-xs">1</div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-800">Kota Jayapura</h4>
+                  <p className="text-[10px] text-slate-500">Verified by SIPD</p>
+                </div>
+              </div>
+              <span className="text-sm font-bold text-slate-800">92%</span>
+            </div>
+            
+            {/* Item 2 */}
+            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-bold text-xs">2</div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-800">Kab. Mimika</h4>
+                  <p className="text-[10px] text-slate-500">Verified by SIPD</p>
+                </div>
+              </div>
+              <span className="text-sm font-bold text-slate-800">88%</span>
+            </div>
+
+            {/* Item 3 */}
+            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 text-slate-600 font-bold text-xs">3</div>
+                <div>
+                  <h4 className="text-sm font-bold text-slate-800">Kab. Biak Numfor</h4>
+                  <p className="text-[10px] text-slate-500">Processing Data</p>
+                </div>
+              </div>
+              <span className="text-sm font-bold text-slate-800">75%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Bottom Row: Doughnut & Sentiment */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        {/* SDM Papua Status (EWS Doughnut Chart CSS Mockup) */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col sm:flex-row items-center gap-6">
+          <div className="flex-1 text-center sm:text-left">
+            <h3 className="text-base font-bold text-slate-800 tracking-tight">SDM Papua Target (EWS)</h3>
+            <p className="text-xs text-slate-500 mt-1 mb-4">Real-time student academic standing vs at-risk interventions</p>
+            
+            <div className="space-y-3">
+              <div className="flex justify-between items-center text-sm">
+                <span className="flex items-center gap-2 text-slate-600 font-medium">
+                  <span className="w-3 h-3 rounded-full bg-emerald-500"></span> Active & On-Track
+                </span>
+                <span className="font-bold text-slate-800">88%</span>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <span className="flex items-center gap-2 text-slate-600 font-medium">
+                  <span className="w-3 h-3 rounded-full bg-amber-500"></span> Warning (GPA {"<"} 2.75)
+                </span>
+                <span className="font-bold text-slate-800">9%</span>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <span className="flex items-center gap-2 text-slate-600 font-medium">
+                  <span className="w-3 h-3 rounded-full bg-red-500"></span> At Risk (Unpaid)
+                </span>
+                <span className="font-bold text-slate-800">3%</span>
+              </div>
+            </div>
+          </div>
+
+          {/* CSS Doughnut Chart using conic-gradient */}
+          <div className="relative shrink-0 flex items-center justify-center w-40 h-40 rounded-full"
+               style={{
+                 background: 'conic-gradient(#10b981 0% 88%, #f59e0b 88% 97%, #ef4444 97% 100%)'
+               }}>
+            {/* Inner hole for Doughnut effect */}
+            <div className="absolute w-28 h-28 bg-white rounded-full flex flex-col items-center justify-center shadow-inner">
+              <span className="text-2xl font-bold text-slate-800">12k</span>
+              <span className="text-[10px] text-slate-500 uppercase font-semibold">Tracked</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Public Voice Sentiment */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-center">
+          <div className="flex justify-between items-start mb-6">
+            <div>
+              <h3 className="text-base font-bold text-slate-800 tracking-tight">Public Voice Sentiment</h3>
+              <p className="text-xs text-slate-500 mt-1">Aggregated NLP sentiment from citizen feedback channels</p>
+            </div>
+            <div className="p-2 bg-slate-50 rounded-lg shrink-0 border border-slate-100">
+               <span className="flex items-center gap-1 text-xs font-bold text-slate-700">
+                  Total Check: 4,520
+               </span>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex justify-between items-end mb-1">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                <ThumbsUp className="w-4 h-4 text-emerald-500" /> Positive (Appreciation)
+              </span>
+              <span className="text-lg font-bold text-emerald-600">65%</span>
+            </div>
+            <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden flex">
+              <div className="h-full bg-emerald-500 transition-all duration-1000" style={{ width: '65%' }}></div>
+            </div>
+          </div>
+
+          <div className="space-y-2 mt-6">
+            <div className="flex justify-between items-end mb-1">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                <ThumbsDown className="w-4 h-4 text-amber-500" /> Negative (Complaints)
+              </span>
+              <span className="text-lg font-bold text-amber-500">35%</span>
+            </div>
+            <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden flex">
+              <div className="h-full bg-amber-500 transition-all duration-1000" style={{ width: '35%' }}></div>
+            </div>
+          </div>
+
+        </div>
+
       </div>
 
     </div>
   );
 }
+
